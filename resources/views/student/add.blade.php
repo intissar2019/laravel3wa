@@ -9,4 +9,5 @@
 		  @endforeach
 	</select>
 	<button type="submit">OK</button> 
+	<button type="reset">ANNULER</button> 
 </form>

@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 use App\Classroom;
 use App\Student;
 use Image;
+use Auth;
 
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Input;
+
+use Carbon\Carbon;
 //use Input;
 
 class TestController extends Controller
@@ -39,7 +42,7 @@ public function handleAddClassroom(){
 
             $fullImagePath = public_path('storage/classrooms/' . $photo);
 
-            Image::make($data['photo']->getRealPath())->blur(10)->rotate(-45)->save($fullImagePath);
+            Image::make($data['photo']->getRealPath())->blur(10)->save($fullImagePath);
 
             $photoPath = 'storage/classrooms/' . $photo;
 
@@ -98,6 +101,9 @@ public function handleAddClassroom(){
 
 }
 public function showUpdateStudent($id){
+	/*if(!Auth::user()){
+		return redirect(route('showClassroomList'));
+	}*/
  	$student=Student::find($id);
  	if($student){	
  		$classrooms=Classroom::all();
@@ -127,18 +133,42 @@ public function handleUpdateStudent($id){
 		'email'=>$data['email'],
 		'classroom_id'=>$data['classroom_id']
 	]);
-return redirect(route('showStudent',['id'=> $id]));
+		return redirect(route('showStudent',['id'=> $id]));
 
 	}
 	
-return back();
+		return back();
+		}
+
+
+public function showStudentLogin(){
+ 	
+		return view('student.login');
+
 }
 
 
+public function handleStudentLogin(){
+ 	
+	$data=Input::all();
+	$cred=[
+			'email'=>$data['email'],
+			'password'=>$data['password']
+		];
+		if(Auth::attempt($cred)){
+			return redirect(route('showAddClassroom'));
+
+		}
+		return back();
+
+}
+public function handleStudentLogout(){
+ 	
 	
- 
+		Auth::logout();
+		return redirect(route('showAddClassroom'));
 
 }
 
-
+}
 

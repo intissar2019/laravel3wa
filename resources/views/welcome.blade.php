@@ -102,7 +102,7 @@
                     
                         @foreach($classrooms as $classroom)
                         <tr>
-                            <td><h3>{{$classroom->title}}</h3></td>
+                            <td><h3>{{ $classroom->title }}</h3></td>
                              <td><img src="{{asset($classroom->photo)}}"></td>
                              <td>{{$classroom->students->count()}}</td>
                              <td>
@@ -110,9 +110,12 @@
                                    @foreach($classroom->students as $student)
                                    <li>{{$student->name}}
                                      </li><br> <hr>
+                                     <a href="{{route('showStudent',['id'=>$student->id])}}">Afficher Etudiant</a><hr>
+                                     @auth
                                    <a href="{{route('handleDeleteStudent',['id'=>$student->id])}}">supprimer Etudiant</a><hr>
-                                   <a href="{{route('showStudent',['id'=>$student->id])}}">Afficher Etudiant</a><hr>
+                                   
                                     <a href="{{route('showUpdateStudent',['id'=>$student->id])}}">Modifier Etudiant</a>
+                                    @endauth
                               
                                    @endforeach 
                                  </ul>
@@ -123,6 +126,14 @@
                     </tbody>
 
                 </table>
+                <div style="background-color: grey">
+                     @auth
+                                   <a class="btn btn-danger" href="{{ route('handleStudentLogout')}}">LOGOUT</a>
+                                   
+                                
+                                    @endauth
+
+                </div>
             
                     
                

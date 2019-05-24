@@ -102,16 +102,18 @@
                     
                         @foreach($classrooms as $classroom)
                         <tr>
-                            <td>{{$classroom->title}}</td>
-                             <td>{{$classroom->photo}}</td>
+                            <td><h3>{{$classroom->title}}</h3></td>
+                             <td><img src="{{asset($classroom->photo)}}"></td>
                              <td>{{$classroom->students->count()}}</td>
                              <td>
                                  <ul>
                                    @foreach($classroom->students as $student)
-                                   <li>{{$student->name}}<br> <hr>
+                                   <li>{{$student->name}}
+                                     </li><br> <hr>
                                    <a href="{{route('handleDeleteStudent',['id'=>$student->id])}}">supprimer Etudiant</a><hr>
-                                   <a href="{{route('showStudent',['id'=>$student->id])}}">Afficher Etudiant</a>
-                               </li>
+                                   <a href="{{route('showStudent',['id'=>$student->id])}}">Afficher Etudiant</a><hr>
+                                    <a href="{{route('showUpdateStudent',['id'=>$student->id])}}">Modifier Etudiant</a>
+                              
                                    @endforeach 
                                  </ul>
                              </td>

@@ -1,14 +1,12 @@
  <table>
 
-                    <thead>Affichage d'un Etudiant</thead>
-                    <tbody>
-                       <td>{{$student->name}}</td>
-                       <td>{{$student->email}}</td>
-                       <td>{{$student->classroom->title}}</td>
+                    <h1>Affichage d'un Etudiant</h1>
+                       <h3>{{$student->name}}</h3>
+                       <p>{{$student->email}}</p>
+                       <p>{{$student->classroom->title}}</p>
                     
       
                        
-                      
-                    </tbody>
+                  
 
-                </table>
+  </table>

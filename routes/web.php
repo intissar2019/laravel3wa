@@ -18,8 +18,10 @@ Route::get('/', function () {
  Route::get('/classroom/add', 'TestController@showAddClassroom')->name('showAddClassroom');
  Route::post('/classroom/add', 'TestController@handleAddClassroom')->name('handleAddClassroom');
 
- /******************************student functions******************/
  Route::get('/student/add', 'TestController@showAddStudent')->name('showAddStudent');
  Route::post('/student/add', 'TestController@handleAddStudent')->name('handleAddStudent');
  Route::get('/student/delete/{id}', 'TestController@handleDeleteStudent')->name('handleDeleteStudent');
  Route::get('/student/view/{id}', 'TestController@showStudent')->name('showStudent');
+ Route::get('/student/update/{id}', 'TestController@showUpdateStudent')->name('showUpdateStudent');
+ Route::post('/student/update/{id}', 'TestController@handleUpdateStudent')->name('handleUpdateStudent');
+

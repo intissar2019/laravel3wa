@@ -103,8 +103,11 @@
                         @foreach($classrooms as $classroom)
                         <tr>
                             <td><h3>{{ $classroom->title }}</h3></td>
-                             <td><img src="{{asset($classroom->photo)}}"></td>
-                             <td>{{$classroom->students->count()}}</td>
+                             
+                             <td> <p>
+                                   {{trans_choice('perso.class',($classroom->students->count()))}}
+                                     </p>
+                                    {{$classroom->students->count()}}</td>
                              <td>
                                  <ul>
                                    @foreach($classroom->students as $student)
@@ -114,7 +117,7 @@
                                      @auth
                                    <a href="{{route('handleDeleteStudent',['id'=>$student->id])}}">supprimer Etudiant</a><hr>
                                    
-                                    <a href="{{route('showUpdateStudent',['id'=>$student->id])}}">Modifier Etudiant</a>
+                                    <a href="{{route('showUpdateStudent',['id'=>cryptageID($student->id)])}}">Modifier Etudiant</a>
                                     @endauth
                               
                                    @endforeach 

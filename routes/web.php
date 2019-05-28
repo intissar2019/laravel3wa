@@ -39,3 +39,12 @@ Route::get('/', function () {
 
  Route::get('/student/login', 'TestController@showStudentLogin')->name('showStudentLogin');
  Route::post('/student/login', 'TestController@handleStudentLogin')->name('handleStudentLogin');
+
+
+
+
+ Route::get('/student/search', 'TestController@showStudentSearch')->name('showStudentSearch');
+ Route::post('/student/search', 'TestController@handleStudentSearch')->name('handleStudentSearch');
+
+ Route::get('/student/searchDate', 'TestController@showStudentSearchDate')->name('showStudentSearchDate');
+ Route::post('/student/searchDate', 'TestController@handleStudentSearchDate')->name('handleStudentSearchDate');

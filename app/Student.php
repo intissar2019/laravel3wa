@@ -40,10 +40,16 @@ public function setRememberToken($value)
 
 public function getRememberTokenName()
 {
-  
-
-
-  return null; // not supported
+    return null; // not supported
 }
+
+
+
+
+
+
+
+
+
 
 }

@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 use Carbon\Carbon;
+use Validator;
+use Session;
 //use Input;
+
+
 
 class TestController extends Controller
 {
@@ -52,7 +56,7 @@ public function handleAddClassroom(){
 		'photo'=>$photoPath
 	]);
 	//return back();
-	return redirect(route('showClassroomList'));
+	//return redirect(route('showClassroomList'));
 
 
 	}
@@ -68,6 +72,19 @@ public function handleAddClassroom(){
 
    public function handleAddStudent(){
 	$data=Input::all();
+	$rules=[
+		'name'=>'required',
+		'email'=>'required|email',
+	];
+	$messages=[
+		'name.required'=>'Le nom est obligatoire !',
+		'email.required'=>'Le mail est obligatoire !',
+		'email.email'=>'mail invalide '
+	];
+	$validation =Validator::make($data,$rules,$messages);
+	if( $validation->fails()){
+		return redirect()->back()->withErrors($validation->errors());
+	}
 	Student::create([
 		'name'=>$data['name'],
 		'email'=>$data['email'],
@@ -104,6 +121,7 @@ public function showUpdateStudent($id){
 	/*if(!Auth::user()){
 		return redirect(route('showClassroomList'));
 	}*/
+	
  	$student=Student::find($id);
  	if($student){	
  		$classrooms=Classroom::all();
@@ -117,6 +135,7 @@ public function showUpdateStudent($id){
 
 
 public function handleUpdateStudent($id){
+
 	$data=Input::all();
  	$student=Student::find($id);
 
@@ -156,6 +175,7 @@ public function handleStudentLogin(){
 			'password'=>$data['password']
 		];
 		if(Auth::attempt($cred)){
+			Session::put([ 'msg'=> 'Connexion réussie']);
 			return redirect(route('showAddClassroom'));
 
 		}
@@ -163,12 +183,50 @@ public function handleStudentLogin(){
 
 }
 public function handleStudentLogout(){
- 	
-	
 		Auth::logout();
 		return redirect(route('showAddClassroom'));
 
 }
+
+public function showStudentSearch(){
+ 	
+		return view('student.search');
+
+}
+
+
+public function handleStudentSearch(){
+ 	
+	$data=Input::all();
+	$student=Student::Where('name', 'like', '%' . $data['name'] . '%')->get();
+    //dd($student);
+	
+	 //return view('student.search',['student'=>$student]);
+
+}
+
+
+
+public function showStudentSearchDate(){
+ 	
+		return view('student.searchDate');
+
+}
+
+public function handleStudentSearchDate(){
+ 	
+	$data=Input::all();
+	$firstDate = Carbon::createFromFormat("Y-m-d", $data['firstDate']);
+	$lastDate = Carbon::createFromFormat("Y-m-d", $data['lastDate']);
+	$student=Student::WhereBetween('created_at', [$firstDate,$lastDate] )->get();
+	//dd($student);
+	
+	 //return view('student.search',['student'=>$student]);
+
+}
+
+
+
 
 }
 
